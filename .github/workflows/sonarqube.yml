@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: read  # Allows SonarQube to decorate PRs with analysis results
+  pull-requests: read
 
 jobs:
   analysis:
@@ -21,13 +21,9 @@ jobs:
       - name: Run SonarQube Scanner
         uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}     # Auto-provided by GitHub Actions
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}       # Your SonarQube token secret
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # Your SonarQube instance URL secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
             -Dsonar.projectKey=your_project_key_here
-            # Optional: specify source folder if different than root
-            # -Dsonar.sources=src
-            # Optional: enable verbose logs for debugging
-            # -Dsonar.verbose=true
