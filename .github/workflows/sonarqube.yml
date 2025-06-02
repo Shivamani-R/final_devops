@@ -25,6 +25,6 @@ jobs:
       - name: Run SonarQube Scanner
         uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
         with:
-          projectKey: your_project_key_here
+          projectKey: fdbb33842c535560929b6795447dd60fb4a733ed
           # Optional: specify source folder if not root
           # args: -Dsonar.sources=src
