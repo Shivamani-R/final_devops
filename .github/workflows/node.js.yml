@@ -9,25 +9,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
 
     - name: Install dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
 
-    - name: Build
-      run: npm run build
+    - name: Build project
+      run: |
+        if npm run | grep -q 'build'; then
+          npm run build
+        else
+          echo "No build script found. Skipping build."
+        fi
 
-    # If you have tests, replace this with your actual test command
     - name: Run tests
-      run: npm test || echo "No tests found or tests failed"
+      run: |
+        if npm run | grep -q 'test'; then
+          npm test
+        else
+          echo "No test script found. Skipping tests."
+        fi
